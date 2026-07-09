@@ -3,7 +3,7 @@ import { Guru99Page } from '../../src/pages/guru99/guru99.page';
 import { ConfigManager } from '../../src/config/config-manager';
 
 test.describe('Guru99 Home & Tutorial', () => {
-    test.only('Case 4 - iFrame and tab handling', async ({ page, context }) => {
+    test('Case 4 - iFrame and tab handling', async ({ page, context }) => {
         const homePage = new Guru99Page(page);
 
         // Step 1: Open URL
