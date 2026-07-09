@@ -37,7 +37,7 @@ jobs:
         # Inject all environment variables directly into the process context
         env:
           CI: true
-          SAUCE_DEMO_URL: https://www.saucedemo.com
+          SAUCE_DEMO_URL: https://www.saucedemo.com/inventory.html
           HTML_EDITOR_URL: https://onlinehtmleditor.dev
           GURU99_URL: http://demo.guru99.com/test/guru99home
           API_URL: https://jsonplaceholder.typicode.com

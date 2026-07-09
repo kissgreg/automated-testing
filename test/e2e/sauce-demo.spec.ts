@@ -7,8 +7,8 @@ import { ConfigManager } from '../../src/config/config-manager';
 test.describe('Swag Labs online store', () => {
  
     test.beforeEach(async ({ page }) => {
-        // NOTE: Requirement specifies /inventory.html, but calling this route unauthenticated
-        // triggers a UI-level error message
+        // NOTE: Requirement specifies /inventory.html, calling this route
+        // unauthenticated triggers a UI-level error message
         await test.step('Navigate to SauceDemo / Swag Labs login page', async () => {
             await page.goto(ConfigManager.getSauceDemoUrl());
         });
@@ -45,12 +45,13 @@ test.describe('Swag Labs online store', () => {
         });
 
         // Step 7: Checkout
-        await inventoryPage.goToCart();
-        
-        // NOTE: Replacing hardcoded strings with dynamically generated synthetic test data
-        // using '@faker-js/faker' would ensure boundary value coverage (e.g., varying name lengths,
-        // special characters) and prevent data collision.
-        await checkoutPage.checkout('John', 'Doe', '54321');
+        await test.step('Go through the checkout process', async () => {
+            await inventoryPage.goToCart();
+            // NOTE: Replacing hardcoded strings with dynamically generated synthetic test data
+            // using '@faker-js/faker' would ensure boundary value coverage (e.g., varying name lengths,
+            // special characters) and prevent data collision.
+            await checkoutPage.checkout('John', 'Doe', '54321');
+        });
 
         // Step 8: Validate 'Thank you for your order!' message
         await test.step('Validate transaction is completed', async () => {
@@ -67,8 +68,10 @@ test.describe('Swag Labs online store', () => {
         const loginPage = new SauceLoginPage(page);
         const inventoryPage = new SauceInventoryPage(page);
 
-        // Step 2: Click login without providing credentials
-        await loginPage.clickLoginButton();
+        // Step 2: Click on login button
+        await test.step('Click on login button without providing credentials', async () => {
+            await loginPage.clickLoginButton();
+        });
 
         // Step 3: Validate the error message
         await test.step('Validate error message for empty mandatory fields', async () => {
@@ -81,17 +84,16 @@ test.describe('Swag Labs online store', () => {
             loginPage.login('standard_user', 'secret_sauce');
         });
 
-
         // Step 5: Scroll down to the bottom of the page
-        await inventoryPage.scrollToFooter();
+        await test.step('Scroll down to the bottom of the page', async () => {
+            await inventoryPage.scrollToFooter();
+        });
         
         // Step 6: Validate footer message contents
-        
         // NOTE: Validation of a hardcoded year value can create
         // brittle tests. Using RegEx matching would make the assertion
         // future-proof if the test specification allows it. Example:
         // expect(footerText).toMatch(/20\d{2}/);
-
         const expectedFooterContentYear = '2023';
         const expectedFooterContentLegal = 'Terms of Service';
         await test.step(`Validate footer message contents: \'${expectedFooterContentYear}\', \'${expectedFooterContentLegal}\'`, async () => {
