@@ -1,0 +1,31 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# TypeScript compilation output
+dist/
+out/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.env
+
+# Playwright specific outputs
+test-results/
+playwright-report/
+blob-report/
+playwright/.local-browsers/
+
+# Allure Report specific outputs
+allure-results/
+allure-report/
+
+# Debug and system files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+.DS_Store
+Thumbs.db

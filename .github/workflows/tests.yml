@@ -1,0 +1,55 @@
+name: Playwright automation CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# Allow auto-publishing reports to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  test-and-report:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.18.0'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browser binaries
+        run: npx playwright install --with-deps chromium
+
+      - name: Execute automated test suite
+        # Cleanly injecting all environment variables directly into the process context
+        env:
+          CI: true
+          SAUCE_DEMO_URL: https://www.saucedemo.com
+          HTML_EDITOR_URL: https://onlinehtmleditor.dev
+          GURU99_URL: http://demo.guru99.com/test/guru99home
+          API_BASE_URL: https://jsonplaceholder.typicode.com
+        run: npm run test
+        # Reason: reports generate even when assertions fail
+        continue-on-error: true
+
+      - name: Generate Allure report
+        run: npm run allure:generate
+
+      - name: Deploy Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report

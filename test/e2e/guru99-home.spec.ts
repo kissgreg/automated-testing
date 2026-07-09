@@ -1,0 +1,45 @@
+import { test, expect } from '@playwright/test';
+import { Guru99Page } from '../../src/pages/guru99/guru99.page';
+import { ConfigManager } from '../../src/config/config-manager';
+
+test.describe('Guru99 Home', () => {
+    test('Case 4 - iFrame and tab handling', async ({ page, context }) => {
+        const homePage = new Guru99Page(page);
+
+        // Step 1: Open URL
+        await test.step('Navigate to Online HTML Editor page', async () => {
+            await page.goto(ConfigManager.getGuru99Url());
+        });
+
+        // Step 2: Click image in iframe
+        let newPage: any;
+        await test.step('Click image in iFrame', async () => {
+            [newPage] = await Promise.all([
+                context.waitForEvent('page'),
+                homePage.clickIframeImage()
+            ]);
+            await newPage.waitForLoadState('domcontentloaded');
+        });
+
+        // Step 3: Verify page is loaded in new tab
+        await test.step('Verify the page opened on a new tab', async () => {
+            const tabTitle = await newPage.title();
+            expect(tabTitle).toContain('Selenium Live Project for Practice');
+
+            // Step 4: Close tab and return to main page
+            await newPage.close();
+            await page.bringToFront();
+        });
+
+        // Step 5: Hover on 'Testing' menu and navigate to Selenium Tutorial
+        await test.step('Hover on Testing menu and navigate to Selenium Tutorial', async () => {
+            await homePage.navigateToSeleniumTutorials();
+        });
+
+        // Step 6: Verify the 'Join Now' button
+        await test.step('Verify the \'Join Now\' button is displayed', async () => {
+            const buttonLocator = homePage.getJoinNowButtonLocator();
+            await expect(buttonLocator).toBeVisible();
+        });
+    });
+});

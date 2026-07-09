@@ -1,0 +1,39 @@
+{
+  "name": "automated-testing",
+  "version": "1.0.0",
+  "description": "Playwright TypeScript Test Automation Framework",
+  "main": "index.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=24.18.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "clean": "npx rimraf allure-results allure-report test-results playwright-report",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "postinstall": "playwright install chromium --with-deps",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "report": "npm run allure:generate && npm run allure:open"
+  },
+  "keywords": [
+    "playwright",
+    "automation",
+    "qa",
+    "testing"
+  ],
+  "author": "Gergely Kiss",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^22.0.0",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.10.1",
+    "dotenv": "^16.4.5",
+    "rimraf": "^6.0.1",
+    "typescript": "^6.0.3"
+  }
+}
