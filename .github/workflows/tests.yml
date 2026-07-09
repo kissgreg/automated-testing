@@ -40,7 +40,7 @@ jobs:
           SAUCE_DEMO_URL: https://www.saucedemo.com
           HTML_EDITOR_URL: https://onlinehtmleditor.dev
           GURU99_URL: http://demo.guru99.com/test/guru99home
-          API_BASE_URL: https://jsonplaceholder.typicode.com
+          API_URL: https://jsonplaceholder.typicode.com
         run: npm run test
         # Reason: reports generate even when assertions fail
         continue-on-error: true
