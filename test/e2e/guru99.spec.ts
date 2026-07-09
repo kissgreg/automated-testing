@@ -2,13 +2,13 @@ import { test, expect } from '@playwright/test';
 import { Guru99Page } from '../../src/pages/guru99/guru99.page';
 import { ConfigManager } from '../../src/config/config-manager';
 
-test.describe('Guru99 Home', () => {
-    test('Case 4 - iFrame and tab handling', async ({ page, context }) => {
+test.describe('Guru99 Home & Tutorial', () => {
+    test.only('Case 4 - iFrame and tab handling', async ({ page, context }) => {
         const homePage = new Guru99Page(page);
 
         // Step 1: Open URL
-        await test.step('Navigate to Online HTML Editor page', async () => {
-            await page.goto(ConfigManager.getGuru99Url());
+        await test.step('Navigate to Guru99 Home page', async () => {
+            await page.goto(ConfigManager.getGuru99Url(), { waitUntil: 'domcontentloaded' });
         });
 
         // Step 2: Click image in iframe

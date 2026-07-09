@@ -7,7 +7,8 @@ export default defineConfig({
   testDir: './test',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 1 : 0,
+  // disabled to ensure fast CI runs
+  retries: 0,
   workers: process.env.CI ? 2 : undefined,
   
   reporter: [
