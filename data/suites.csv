@@ -1,6 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","30207","Case 4 - iFrame and tab handling","End-to-end UI and API tests","2026-07-09","broken","2026-07-09","Guru99 Home","e2e/guru99-home.spec.ts","",""
-"","18","Case 5 - Validate response of endpoint '/users'","End-to-end UI and API tests","2026-07-09","failed","2026-07-09","JSONPlaceholder REST API","api/api.spec.ts","",""
-"","1024","Case 2 - Verify error messages for mandatory fields","End-to-end UI and API tests","2026-07-09","failed","2026-07-09","Swag Labs online store","e2e/sauce-demo.spec.ts","",""
-"","3102","Case 3 - Validate rich text formatting","End-to-end UI and API tests","2026-07-09","passed","2026-07-09","Rich Text Editor","e2e/html-editor.spec.ts","",""
-"","5843","Case 1 - Automate Purchase Process","End-to-end UI and API tests","2026-07-09","passed","2026-07-09","Swag Labs online store","e2e/sauce-demo.spec.ts","",""
