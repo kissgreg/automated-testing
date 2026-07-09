@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from '../base-page';
 
 export class SauceInventoryPage extends BasePage {
@@ -30,7 +30,8 @@ export class SauceInventoryPage extends BasePage {
     }
 
     public async scrollToFooter(): Promise<void> {
-        await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+        await this.footer.scrollIntoViewIfNeeded();
+        await expect(this.footer).toBeVisible();
     }
 
     public async getFooterText(): Promise<string> {
