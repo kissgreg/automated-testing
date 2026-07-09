@@ -21,10 +21,11 @@ test.describe('Guru99 Home & Tutorial', () => {
             await newPage.waitForLoadState('domcontentloaded');
         });
 
-        // Step 3: Verify page is loaded in new tab
-        await test.step('Verify the page opened in a new tab', async () => {
+        // Step 3: Verify page is loaded in a new tab, verify tab title
+        await test.step('Verify page is loaded in a new tab', async () => {
             expect(context.pages().length).toBe(2);
             const tabTitle = await newPage.title();
+            // Mismatching tab title or Cloudflare challenge can be handled and the test flow can continue
             expect.soft(tabTitle).toContain('Selenium Live Project: FREE Real Time Project for Practice');
         });
 
