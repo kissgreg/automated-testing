@@ -24,9 +24,12 @@ test.describe('Guru99 Home & Tutorial', () => {
         // Step 3: Verify page is loaded in new tab
         await test.step('Verify the page opened on a new tab', async () => {
             const tabTitle = await newPage.title();
-            expect(tabTitle).toContain('Selenium Live Project for Practice');
+            // Running in CI triggers Cloudflare challenge - log it and let the test flow continue
+            expect.soft(tabTitle).toContain('Selenium Live Project for Practice');
+        });
 
-            // Step 4: Close tab and return to main page
+        // Step 4: Close tab and return to main page
+        await test.step('Close new tab', async () => {
             await newPage.close();
             await page.bringToFront();
         });
