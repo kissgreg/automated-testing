@@ -34,7 +34,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Execute automated test suite
-        # Cleanly injecting all environment variables directly into the process context
+        # Inject all environment variables directly into the process context
         env:
           CI: true
           SAUCE_DEMO_URL: https://www.saucedemo.com

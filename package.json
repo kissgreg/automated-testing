@@ -12,6 +12,7 @@
   },
   "scripts": {
     "clean": "npx rimraf allure-results allure-report test-results playwright-report",
+    "pretest": "npm run clean",
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "postinstall": "playwright install chromium --with-deps",
