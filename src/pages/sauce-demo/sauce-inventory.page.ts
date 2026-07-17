@@ -38,4 +38,13 @@ export class SauceInventoryPage extends BasePage {
         await this.footer.waitFor({ state: 'visible' });
         return this.footer.innerText();
     }
+
+    public async clickProductByName(productName: string): Promise<void> {
+        const productLink = this.page.locator('[data-test="inventory-item-name"]', { hasText: productName });
+        await productLink.click();
+    }
+
+    public async verifyInventoryUrl(): Promise<void> {
+        await expect(this.page).toHaveURL(/\/inventory\.html/);
+    }
 }

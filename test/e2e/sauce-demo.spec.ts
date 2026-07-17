@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { SauceLoginPage } from '../../src/pages/sauce-demo/sauce-login.page';
 import { SauceInventoryPage } from '../../src/pages/sauce-demo/sauce-inventory.page';
 import { SauceCheckoutPage } from '../../src/pages/sauce-demo/sauce-checkout.page';
+import { SauceProductDetailsPage } from '../../src/pages/sauce-demo/sauce-product-details.page';
 import { ConfigManager } from '../../src/config/config-manager';
 
 test.describe('Swag Labs online store', () => {
@@ -100,6 +101,41 @@ test.describe('Swag Labs online store', () => {
             const footerText = await inventoryPage.getFooterText();
             expect(footerText).toContain(expectedFooterContentYear);
             expect(footerText).toContain(expectedFooterContentLegal);
+        });
+    });
+
+    test('Case 3 - Navigate to product details and return to inventory', async ({ page }) => {
+        const loginPage = new SauceLoginPage(page);
+        const inventoryPage = new SauceInventoryPage(page);
+        const productDetailsPage = new SauceProductDetailsPage(page);
+
+        const targetProductName = 'Sauce Labs Bolt T-Shirt';
+        const targetProductId = 1;
+
+        // Step 1: Login
+        await test.step('Login with standard user', async () => {
+            await page.goto('https://www.saucedemo.com/');
+            const credentials = ConfigManager.getCredentials(); 
+            await loginPage.login(credentials.username, credentials.password);
+            await inventoryPage.verifyInventoryUrl();
+        });
+
+        // Step 2: Navigate to Product Details
+        await test.step(`Click on product: "${targetProductName}"`, async () => {
+            await inventoryPage.clickProductByName(targetProductName);
+            await productDetailsPage.verifyProductUrl(targetProductId);
+        });
+
+        // Step 3: Validate Details Page Content
+        await test.step('Verify product details page content', async () => {
+            const displayedName = await productDetailsPage.getProductName();
+            expect(displayedName).toBe(targetProductName);
+        });
+
+        // Step 4: Click Back to Products
+        await test.step('Click "Back to products" and verify return to inventory', async () => {
+            await productDetailsPage.clickBackToProducts();
+            await inventoryPage.verifyInventoryUrl();
         });
     });
 });
